@@ -1,0 +1,3 @@
+// Hunt for possible malicious remote processes spawned by outlook.exe
+DeviceProcessEvents 
+| where (InitiatingProcessFolderPath endswith @'\outlook.exe' and FolderPath startswith @'\\\\')

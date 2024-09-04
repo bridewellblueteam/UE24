@@ -1,0 +1,4 @@
+//look for modifications to domain group policy
+//This query requires event 4662 to be configured within the audit policy
+SecurityEvent
+| where EventID == 4662

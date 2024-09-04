@@ -1,0 +1,10 @@
+//source: FalconForce - https://github.com/FalconForceTeam/FalconFriday
+let timeframe = 1h;
+// List ADCS servers.
+let CESCEPServers = dynamic(["ADCS01.test.lab", "ADCS02.test.lab"]);
+// Cert request via web interface.
+W3CIISLog
+| where ingestion_time() >= ago(timeframe)
+| where Computer in~ (CESCEPServers)
+| where url_decode(csUriStem) contains "_CES_Kerberos/service.svc" or url_decode(csUriQuery) contains "_CEP_Kerberos/service.svc"
+| where not(csUserAgent =~ "MS-WebServices/1.0")

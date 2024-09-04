@@ -1,0 +1,4 @@
+// NetSupport RAT (New Scheduled Tasks):
+DeviceProcessEvents 
+| project DeviceId, DeviceName, ActionType, Timestamp, FileName, ProcessCommandLine, InitiatingProcessFolderPath, InitiatingProcessId 
+| where ProcessCommandLine has_all ("schtasks","/create") and not(ProcessCommandLine has_any("\\Program Files\\Common Files\\Microsoft Shared\\ClickToRun\\","\\ProgramData\\Microsoft\\ClickToRun\\"))

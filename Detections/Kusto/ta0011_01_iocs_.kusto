@@ -1,0 +1,15 @@
+//incident ioc sweep
+let ip_ioc = dynamic(["88.214.25.253","88.214.25.235","104.21.20.6","37.120.239.146"]);
+(union isfuzzy=true
+(DnsEvents
+| where IPAddresses in (ip_ioc)
+| project TimeGenerated, Computer, IPAddresses, Name, ClientIP, Type
+| extend DestinationIPAddress = IPAddresses, DNSName = Name, Host = Computer
+| extend timestamp = TimeGenerated, IPCustomEntity = DestinationIPAddress, HostCustomEntity = Host
+),
+(DeviceNetworkEvents
+| where RemoteIP  in (ip_ioc)
+| project TimeGenerated, DeviceName, RemoteIP, RemoteUrl, InitiatingProcessFileName, InitiatingProcessCommandLine
+| extend timestamp = TimeGenerated, HostCustomEntity = DeviceName
+)
+)

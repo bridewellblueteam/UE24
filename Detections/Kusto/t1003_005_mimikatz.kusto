@@ -1,0 +1,11 @@
+//Mimikatz process commandline parameters
+DeviceProcessEvents
+| where ProcessCommandLine has_any ( 
+  "sekurlsa", 
+  "kerberos", 
+  "crypto", 
+  "vault", 
+  "lsadump" 
+) 
+| where ProcessCommandLine contains "::" 
+| order by Timestamp

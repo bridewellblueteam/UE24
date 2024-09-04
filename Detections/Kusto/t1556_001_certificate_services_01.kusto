@@ -1,0 +1,10 @@
+//source: FalconForce - https://github.com/FalconForceTeam/FalconFriday
+let timeframe = 1h;
+// List ADCS servers.
+let ADCSsrv = dynamic(["ADCS01.test.lab", "ADCS02.test.lab"]);
+// Cert request via web interface.
+W3CIISLog
+| where ingestion_time() >= ago(timeframe)
+| where Computer in~ (ADCSsrv)
+| where not(csMethod in~ ("GET","HEAD"))
+| where url_decode(csUriStem) =~ "/certsrv/certfnsh.asp"

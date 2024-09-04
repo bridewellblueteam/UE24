@@ -1,0 +1,3 @@
+// detect rclone use
+DeviceProcessEvents
+ | where FileName has_any ("rclone")  or ProcessVersionInfoOriginalFileName has_any ("rclone") or InititaingProcessVersionInfoOriginalFileName has_any ("rclone") 

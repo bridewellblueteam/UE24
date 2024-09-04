@@ -1,0 +1,9 @@
+DeviceEvents
+| where ActionType == "NamedPipeEvent"
+| where InitiatingProcessFileName =~ "rundll32.exe"
+| extend PipeName = extractjson("$.PipeName", AdditionalFields)
+| extend PipeFileOperation = extractjson("$.FileOperation", AdditionalFields)
+| extend NamedPipeEnd = extractjson("$.NamedPipeEnd", AdditionalFields)
+| extend PipeRemoteClientsAccess = extractjson("$.RemoteClientsAccess", AdditionalFields)
+| extend PipeThreadId = extractjson("$.ThreadId", AdditionalFields)
+| order by Timestamp 

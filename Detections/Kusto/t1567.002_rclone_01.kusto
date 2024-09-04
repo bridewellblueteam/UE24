@@ -1,0 +1,5 @@
+// detect rclone use and suspicious commandlines
+let Rclone_Commands = dynamic(["pass","user","copy","mega","sync","config","lsd","remote","ls"]);
+DeviceProcessEvents
+ | where FileName has_any ("rclone")  or ProcessVersionInfoOriginalFileName has_any ("rclone") or InititaingProcessVersionInfoOriginalFileName has_any ("rclone") 
+ | where ProcessCommandLine has_any (Rclone_Commands)
